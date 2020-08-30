@@ -7,6 +7,7 @@ use log::debug;
 use super::data::SqPackData;
 use super::index::SqPackIndex;
 use crate::error::Result;
+use crate::raw_file::SqPackRawFile;
 
 pub struct SqPackArchive {
     pub index: SqPackIndex,
@@ -27,13 +28,17 @@ impl SqPackArchive {
         Ok(Self { index, data })
     }
 
-    pub async fn read_file(&self, folder_hash: u32, file_hash: u32) -> Result<Vec<u8>> {
+    pub async fn read_raw(&self, folder_hash: u32, file_hash: u32) -> Result<SqPackRawFile> {
         let file_offset = self.index.find_offset(folder_hash, file_hash)?;
 
         let dat_index = (file_offset & 0x0f) >> 1;
         let offset = (file_offset & 0xffff_fff0) << 3;
 
-        Ok(self.data[dat_index as usize].read(offset as u64).await?.into_decoded())
+        Ok(self.data[dat_index as usize].read(offset as u64).await?)
+    }
+
+    pub async fn read_file(&self, folder_hash: u32, file_hash: u32) -> Result<Vec<u8>> {
+        Ok(self.read_raw(folder_hash, file_hash).await?.into_decoded())
     }
 
     pub fn folders<'a>(&'a self) -> impl Iterator<Item = u32> + 'a {
