@@ -1,5 +1,5 @@
 #[cfg(test)]
-#[cfg(feature = "std")]
+#[cfg(feature = "test_local")]
 mod tests {
     use std::path::Path;
 

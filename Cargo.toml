@@ -8,6 +8,7 @@ edition = "2018"
 doctest = false
 
 [features]
+test_local = ["std"]
 default = ["std"]
 std = ["crc32fast/std", "async-std"]
 
