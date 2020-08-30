@@ -11,6 +11,7 @@ mod util;
 pub use archive_id::SqPackArchiveId;
 pub use error::{Result, SqPackReaderError};
 pub use package::Package;
+pub use raw_file::SqPackRawFile;
 pub use reference::{SqPackFileHash, SqPackFileReference};
 
 cfg_if::cfg_if! {

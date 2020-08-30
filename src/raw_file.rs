@@ -6,7 +6,7 @@ use miniz_oxide::inflate::decompress_to_vec;
 use crate::util::cast;
 
 #[repr(C)]
-struct BlockHeader {
+pub struct BlockHeader {
     pub header_size: u32,
     _unk: u32,
     pub compressed_length: u32, // 32000 if not compressed
@@ -14,9 +14,9 @@ struct BlockHeader {
 }
 
 pub struct SqPackRawFile {
-    uncompressed_size: u32,
-    header: Bytes,
-    blocks: Vec<Bytes>,
+    pub uncompressed_size: u32,
+    pub header: Bytes,
+    pub blocks: Vec<Bytes>,
 }
 
 impl SqPackRawFile {
@@ -42,8 +42,12 @@ impl SqPackRawFile {
         result
     }
 
+    pub fn get_block_header(block: &[u8]) -> &BlockHeader {
+        cast::<BlockHeader>(&block)
+    }
+
     fn decode_block_into(block: &[u8], result: &mut Vec<u8>) {
-        let header = cast::<BlockHeader>(&block);
+        let header = Self::get_block_header(&block);
 
         if header.compressed_length >= 32000 {
             result.extend(&block[header.header_size as usize..header.header_size as usize + header.uncompressed_length as usize]);
