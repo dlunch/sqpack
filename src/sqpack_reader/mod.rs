@@ -1,7 +1,6 @@
 mod archive;
 mod archive_container;
 mod data;
-mod definition;
 mod index;
 
 use alloc::boxed::Box;
