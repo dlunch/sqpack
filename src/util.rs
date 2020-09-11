@@ -29,3 +29,7 @@ cfg_if::cfg_if! {
 pub fn cast<T>(data: &[u8]) -> &T {
     unsafe { &*(data.as_ptr() as *const T) }
 }
+
+pub fn cast_array<T>(data: &[u8]) -> &[T] {
+    unsafe { &*(data as *const [u8] as *const [T]) }
+}
