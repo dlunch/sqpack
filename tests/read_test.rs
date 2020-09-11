@@ -22,7 +22,7 @@ mod tests {
             assert_eq!(data[1], b'X');
             assert_eq!(data[2], b'H');
             assert_eq!(data[3], b'F');
-            assert_eq!(data.len(), 882);
+            assert_eq!(data.len(), 894);
         }
 
         {
