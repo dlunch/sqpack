@@ -15,7 +15,7 @@ pub use package::Package;
 pub use reference::{SqPackFileHash, SqPackFileReference};
 
 pub mod internal {
-    mod definition {
+    pub mod definition {
         pub use crate::definition::*;
     }
     pub use crate::raw_file::SqPackRawFile;
