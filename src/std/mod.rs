@@ -19,11 +19,11 @@ use crate::reference::SqPackFileReference;
 use archive::SqPackArchive;
 use archive_container::SqPackArchiveContainer;
 
-pub struct SqPackReader {
+pub struct SqPackPackage {
     archives: SqPackArchiveContainer,
 }
 
-impl SqPackReader {
+impl SqPackPackage {
     pub fn new(base_dir: &Path) -> io::Result<Self> {
         Ok(Self {
             archives: SqPackArchiveContainer::new(base_dir)?,
@@ -36,7 +36,7 @@ impl SqPackReader {
 }
 
 #[async_trait]
-impl Package for SqPackReader {
+impl Package for SqPackPackage {
     async fn read_file_by_reference(&self, reference: &SqPackFileReference) -> Result<Vec<u8>> {
         let archive = self.archive(reference.archive_id).await?;
 

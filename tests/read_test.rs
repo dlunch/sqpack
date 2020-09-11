@@ -3,7 +3,7 @@
 mod tests {
     use std::path::Path;
 
-    use sqpack::{Package, Result, SqPackReader};
+    use sqpack::{Package, Result, SqPackPackage};
 
     #[async_std::test]
     async fn read_test() -> Result<()> {
@@ -12,9 +12,9 @@ mod tests {
             .try_init();
 
         #[cfg(windows)]
-        let pack = SqPackReader::new(Path::new("D:\\Games\\FINAL FANTASY XIV - KOREA\\game\\sqpack"))?;
+        let pack = SqPackPackage::new(Path::new("D:\\Games\\FINAL FANTASY XIV - KOREA\\game\\sqpack"))?;
         #[cfg(unix)]
-        let pack = SqPackReader::new(Path::new("/mnt/d/Games/FINAL FANTASY XIV - KOREA/game/sqpack"))?;
+        let pack = SqPackPackage::new(Path::new("/mnt/d/Games/FINAL FANTASY XIV - KOREA/game/sqpack"))?;
 
         {
             let data = pack.read_file("exd/item.exh").await?;
