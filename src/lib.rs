@@ -23,7 +23,7 @@ pub mod internal {
 
 cfg_if::cfg_if! {
     if #[cfg(feature = "std")] {
-        mod sqpack_reader;
-        pub use sqpack_reader::SqPackReader;
+        mod std;
+        pub use crate::std::SqPackPackage;
     }
 }
