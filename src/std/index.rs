@@ -6,7 +6,7 @@ use async_std::fs;
 
 use crate::definition::{FileSegment, FolderSegment, SqPackHeader, SqPackIndexHeader};
 use crate::error::{Result, SqPackReaderError};
-use crate::util::{cast, cast_array};
+use crate::util::{cast, cast_array, cast_mut};
 
 pub struct SqPackIndex {
     data: Vec<u8>,
@@ -59,6 +59,13 @@ impl SqPackIndex {
         segment.data_offset = new_offset;
 
         Ok(())
+    }
+
+    pub fn write_dat_count(&mut self, new_dat_count: u32) {
+        let header_length = cast::<SqPackHeader>(&self.data).header_length;
+        let index_header = cast_mut::<SqPackIndexHeader>(&mut self.data[header_length as usize..]);
+
+        index_header.dat_count = new_dat_count
     }
 
     pub fn data(&self) -> &[u8] {
