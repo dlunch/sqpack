@@ -61,6 +61,10 @@ impl SqPackIndex {
         Ok(())
     }
 
+    pub fn data(&self) -> &[u8] {
+        &self.data
+    }
+
     fn get_folder_segments(&self) -> &[FolderSegment] {
         let sqpack_header = cast::<SqPackHeader>(&self.data);
         let index_header = cast::<SqPackIndexHeader>(&self.data[sqpack_header.header_length as usize..]);

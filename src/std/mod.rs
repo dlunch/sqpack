@@ -8,6 +8,7 @@ use std::io;
 use std::path::Path;
 use std::sync::Arc;
 
+use async_std::sync::RwLock;
 use async_trait::async_trait;
 use log::debug;
 
@@ -30,7 +31,7 @@ impl SqPackPackage {
         })
     }
 
-    pub async fn archive(&self, archive_id: SqPackArchiveId) -> io::Result<Arc<SqPackArchive>> {
+    pub async fn archive(&self, archive_id: SqPackArchiveId) -> io::Result<Arc<RwLock<SqPackArchive>>> {
         self.archives.get_archive(archive_id).await
     }
 }
@@ -40,6 +41,7 @@ impl Package for SqPackPackage {
     async fn read_file_by_reference(&self, reference: &SqPackFileReference) -> Result<Vec<u8>> {
         let archive = self.archive(reference.archive_id).await?;
 
+        let archive = archive.read().await;
         let result = archive.read_file(reference.hash.folder, reference.hash.file).await;
 
         #[cfg(debug_assertions)]
