@@ -27,19 +27,7 @@ impl SqPackIndex {
     }
 
     pub fn find_offset(&self, folder_hash: u32, file_hash: u32) -> Result<u32> {
-        let folder_segments = self.get_folder_segments();
-        let folder_index = folder_segments
-            .binary_search_by_key(&folder_hash, |x| x.folder_hash)
-            .map_err(|_| SqPackReaderError::NoSuchFolder)?;
-        let folder = &folder_segments[folder_index];
-
-        let file_segments = self.get_file_segments(folder);
-        let file_index = file_segments
-            .binary_search_by_key(&file_hash, |x| x.file_hash)
-            .map_err(|_| SqPackReaderError::NoSuchFile)?;
-        let file = &file_segments[file_index];
-
-        Ok(file.data_offset)
+        Ok(self.find_file_segment(folder_hash, file_hash)?.data_offset)
     }
 
     pub fn folders<'a>(&'a self) -> impl Iterator<Item = u32> + 'a {
@@ -61,6 +49,18 @@ impl SqPackIndex {
         Ok(file_segments.iter().map(|x| x.file_hash))
     }
 
+    pub fn write_offset(&mut self, folder_hash: u32, file_hash: u32, new_offset: u32) -> Result<()> {
+        let segment = self.find_file_segment(folder_hash, file_hash)?;
+
+        // XXX
+        #[allow(mutable_transmutes)]
+        #[allow(clippy::transmute_ptr_to_ptr)]
+        let mut segment: &mut FileSegment = unsafe { core::mem::transmute(segment) };
+        segment.data_offset = new_offset;
+
+        Ok(())
+    }
+
     fn get_folder_segments(&self) -> &[FolderSegment] {
         let sqpack_header = cast::<SqPackHeader>(&self.data);
         let index_header = cast::<SqPackIndexHeader>(&self.data[sqpack_header.header_length as usize..]);
@@ -78,5 +78,20 @@ impl SqPackIndex {
         let file_end = file_begin + folder.file_list_size as usize / size_of::<FileSegment>();
 
         &cast_array::<FileSegment>(&self.data[index_header.file_segment.offset as usize..])[file_begin..file_end]
+    }
+
+    fn find_file_segment(&self, folder_hash: u32, file_hash: u32) -> Result<&FileSegment> {
+        let folder_segments = self.get_folder_segments();
+        let folder_index = folder_segments
+            .binary_search_by_key(&folder_hash, |x| x.folder_hash)
+            .map_err(|_| SqPackReaderError::NoSuchFolder)?;
+        let folder = &folder_segments[folder_index];
+
+        let file_segments = self.get_file_segments(folder);
+        let file_index = file_segments
+            .binary_search_by_key(&file_hash, |x| x.file_hash)
+            .map_err(|_| SqPackReaderError::NoSuchFile)?;
+
+        Ok(&file_segments[file_index])
     }
 }
