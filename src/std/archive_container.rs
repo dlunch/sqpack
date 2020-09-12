@@ -12,7 +12,7 @@ use crate::archive_id::SqPackArchiveId;
 
 pub struct SqPackArchiveContainer {
     archive_paths: HashMap<SqPackArchiveId, PathBuf>,
-    archives: RwLock<HashMap<SqPackArchiveId, Arc<SqPackArchive>>>,
+    archives: RwLock<HashMap<SqPackArchiveId, Arc<RwLock<SqPackArchive>>>>,
 }
 
 impl SqPackArchiveContainer {
@@ -42,7 +42,7 @@ impl SqPackArchiveContainer {
         })
     }
 
-    pub async fn get_archive(&self, archive_id: SqPackArchiveId) -> io::Result<Arc<SqPackArchive>> {
+    pub async fn get_archive(&self, archive_id: SqPackArchiveId) -> io::Result<Arc<RwLock<SqPackArchive>>> {
         {
             let archives = self.archives.read().await;
             if archives.contains_key(&archive_id) {
@@ -52,7 +52,7 @@ impl SqPackArchiveContainer {
 
         let mut archives = self.archives.write().await;
         let archive = SqPackArchive::new(self.archive_paths.get(&archive_id).unwrap()).await?;
-        archives.insert(archive_id, Arc::new(archive));
+        archives.insert(archive_id, Arc::new(RwLock::new(archive)));
 
         Ok(archives.get(&archive_id).unwrap().clone())
     }
