@@ -6,7 +6,7 @@ use std::path::PathBuf;
 use async_std::fs::File;
 use bytes::Bytes;
 
-use crate::definition::{DefaultFrameInfo, FileHeader, FileType, ImageFrameInfo, ModelFrameInfo};
+use super::definition::{DefaultFrameInfo, FileHeader, FileType, ImageFrameInfo, ModelFrameInfo};
 use crate::raw_file::SqPackRawFile;
 use crate::util::{cast, ReadExt};
 
