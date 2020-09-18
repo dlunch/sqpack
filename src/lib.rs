@@ -2,7 +2,6 @@
 extern crate alloc;
 
 mod archive_id;
-mod definition;
 mod error;
 mod package;
 mod raw_file;

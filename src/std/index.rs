@@ -4,7 +4,7 @@ use std::path::Path;
 
 use async_std::fs;
 
-use crate::definition::{FileSegment, FolderSegment, SqPackHeader, SqPackIndexHeader};
+use super::definition::{FileSegment, FolderSegment, SqPackHeader, SqPackIndexHeader};
 use crate::error::{Result, SqPackReaderError};
 use crate::util::{cast, cast_array, cast_mut};
 
