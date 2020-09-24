@@ -8,6 +8,7 @@ use super::definition::{FileSegment, FolderSegment, SqPackHeader, SqPackIndexHea
 use crate::error::{Result, SqPackReaderError};
 use crate::util::{cast, cast_array, cast_mut};
 
+#[derive(Clone)]
 pub struct SqPackIndex {
     data: Vec<u8>,
 }
