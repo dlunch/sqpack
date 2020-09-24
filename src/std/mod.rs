@@ -20,6 +20,8 @@ use crate::reference::SqPackFileReference;
 use archive::SqPackArchive;
 use archive_container::SqPackArchiveContainer;
 
+pub use index::SqPackIndex;
+
 pub struct SqPackPackage {
     archives: SqPackArchiveContainer,
 }
