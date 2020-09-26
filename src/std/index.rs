@@ -8,7 +8,6 @@ use super::definition::{FileSegment, FolderSegment, SqPackHeader, SqPackIndexHea
 use crate::error::{Result, SqPackReaderError};
 use crate::util::{cast, cast_array, cast_mut};
 
-#[derive(Clone)]
 pub struct SqPackIndex {
     data: Vec<u8>,
 }
@@ -67,6 +66,10 @@ impl SqPackIndex {
         let index_header = cast_mut::<SqPackIndexHeader>(&mut self.data[header_length as usize..]);
 
         index_header.dat_count = new_dat_count
+    }
+
+    pub fn data(&self) -> &[u8] {
+        &self.data
     }
 
     fn get_folder_segments(&self) -> &[FolderSegment] {
