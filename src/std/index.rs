@@ -19,6 +19,10 @@ impl SqPackIndex {
         Ok(Self { data })
     }
 
+    pub fn from_raw(raw: Vec<u8>) -> Self {
+        Self { data: raw }
+    }
+
     pub fn dat_count(&self) -> u32 {
         let sqpack_header = cast::<SqPackHeader>(&self.data);
         let index_header = cast::<SqPackIndexHeader>(&self.data[sqpack_header.header_length as usize..]);
