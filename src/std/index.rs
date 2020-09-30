@@ -16,7 +16,7 @@ impl SqPackIndex {
     pub async fn new(path: &Path) -> io::Result<Self> {
         let data = fs::read(path).await?;
 
-        Ok(Self { data })
+        Ok(Self::from_raw(data))
     }
 
     pub fn from_raw(raw: Vec<u8>) -> Self {
