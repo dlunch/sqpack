@@ -19,6 +19,7 @@ pub mod internal {
     cfg_if::cfg_if! {
         if #[cfg(feature = "std")] {
             pub use crate::std::SqPackIndex;
+            pub use crate::std::definition;
         }
     }
 }
