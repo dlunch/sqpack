@@ -1,8 +1,9 @@
 mod archive;
 mod archive_container;
 mod data;
-mod definition;
 mod index;
+
+pub mod definition;
 
 use alloc::boxed::Box;
 use std::io;
