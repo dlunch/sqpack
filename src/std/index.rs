@@ -34,13 +34,13 @@ impl SqPackIndex {
         Ok(self.find_file_segment(folder_hash, file_hash)?.data_offset)
     }
 
-    pub fn folders<'a>(&'a self) -> impl Iterator<Item = u32> + 'a {
+    pub fn folders(&self) -> impl Iterator<Item = u32> + '_ {
         let folder_segments = self.get_folder_segments();
 
         folder_segments.iter().map(|x| x.folder_hash)
     }
 
-    pub fn files<'a>(&'a self, folder_hash: u32) -> Result<impl Iterator<Item = u32> + 'a> {
+    pub fn files(&self, folder_hash: u32) -> Result<impl Iterator<Item = u32> + '_> {
         let folder_segments = self.get_folder_segments();
 
         let folder_index = folder_segments

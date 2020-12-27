@@ -41,11 +41,11 @@ impl SqPackArchive {
         Ok(self.read_raw(folder_hash, file_hash).await?.into_decoded())
     }
 
-    pub fn folders<'a>(&'a self) -> impl Iterator<Item = u32> + 'a {
+    pub fn folders(&self) -> impl Iterator<Item = u32> + '_ {
         self.index.folders()
     }
 
-    pub fn files<'a>(&'a self, folder_hash: u32) -> Result<impl Iterator<Item = u32> + 'a> {
+    pub fn files(&self, folder_hash: u32) -> Result<impl Iterator<Item = u32> + '_> {
         self.index.files(folder_hash)
     }
 }
