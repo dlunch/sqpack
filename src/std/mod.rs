@@ -1,6 +1,7 @@
 mod archive;
 mod archive_container;
 mod data;
+mod file;
 mod index;
 
 pub mod definition;
