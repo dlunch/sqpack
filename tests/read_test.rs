@@ -7,13 +7,13 @@ use sqpack::{Package, Result, SqPackPackage};
 #[async_std::test]
 async fn read_test() -> Result<()> {
     let _ = pretty_env_logger::formatted_timed_builder()
-        .filter(Some("sqpack"), log::LevelFilter::Debug)
+        .filter(Some("sqpack"), log::LevelFilter::Trace)
         .try_init();
 
     #[cfg(windows)]
     let pack = SqPackPackage::new(Path::new("D:\\Games\\FINAL FANTASY XIV - KOREA\\game\\sqpack"))?;
     #[cfg(unix)]
-    let pack = SqPackPackage::new(Path::new("/mnt/e/Games/FINAL FANTASY XIV - KOREA/game/sqpack"))?;
+    let pack = SqPackPackage::new(Path::new("/mnt/d/Games/FINAL FANTASY XIV - KOREA/game/sqpack"))?;
 
     {
         let data = pack.read_file("exd/classjob.exh").await?;
