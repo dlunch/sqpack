@@ -35,12 +35,12 @@ impl File for FileImpl {
                 if #[cfg(unix)] {
                     use std::os::unix::fs::FileExt;
 
-                    file.read_exact_at(&mut buf, offset)?
+                    file.read_exact_at(&mut buf, offset)?;
                 }
                 else if #[cfg(windows)] {
                     use std::os::windows::fs::FileExt;
 
-                    file.seek_read(&mut buf, offset)?
+                    file.seek_read(&mut buf, offset)?;
                 }
             }
 
