@@ -16,9 +16,9 @@ impl SqPackFileHash {
         let folder_str = &path_str[..folder_separator];
         let file_str = &path_str[folder_separator + 1..];
 
-        let path = !Self::hash(&path_str);
-        let folder = !Self::hash(&folder_str);
-        let file = !Self::hash(&file_str);
+        let path = !Self::hash(path_str);
+        let folder = !Self::hash(folder_str);
+        let file = !Self::hash(file_str);
 
         Self { path, folder, file }
     }

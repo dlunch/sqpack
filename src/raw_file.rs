@@ -43,11 +43,11 @@ impl SqPackRawFile {
     }
 
     pub fn get_block_header(block: &[u8]) -> &BlockHeader {
-        cast::<BlockHeader>(&block)
+        cast::<BlockHeader>(block)
     }
 
     fn decode_block_into(block: &[u8], result: &mut Vec<u8>) {
-        let header = Self::get_block_header(&block);
+        let header = Self::get_block_header(block);
 
         if header.compressed_length >= 32000 {
             result.extend(&block[header.header_size as usize..header.header_size as usize + header.uncompressed_length as usize]);
