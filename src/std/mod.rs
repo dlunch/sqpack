@@ -48,7 +48,7 @@ impl Package for SqPackPackage {
 
         #[cfg(debug_assertions)]
         if result.is_err() {
-            debug!("No such file {}", reference.path);
+            debug!("No such file {}, error: {}", reference.path, result.as_ref().err().unwrap());
         }
 
         result
