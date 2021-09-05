@@ -19,9 +19,9 @@ use crate::error::Result;
 use crate::package::Package;
 use crate::reference::SqPackFileReference;
 
-use archive::SqPackArchive;
 use archive_container::SqPackArchiveContainer;
 
+pub use archive::SqPackArchive;
 pub use index::SqPackIndex;
 
 pub struct SqPackPackage {
