@@ -28,6 +28,15 @@ impl SqPackArchive {
         Ok(Self { index, data })
     }
 
+    pub fn from_raw(index: Vec<u8>, mut data: Vec<Vec<u8>>) -> Self {
+        let index = SqPackIndex::from_raw(index);
+
+        assert!(index.dat_count() as usize == data.len());
+        let data = data.drain(..).map(SqPackData::from_raw).collect();
+
+        Self { index, data }
+    }
+
     pub async fn read_raw(&self, folder_hash: u32, file_hash: u32) -> Result<SqPackRawFile> {
         let file_offset = self.index.find_offset(folder_hash, file_hash)?;
 

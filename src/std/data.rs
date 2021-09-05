@@ -7,7 +7,7 @@ use bytes::Bytes;
 use log::{debug, trace};
 
 use super::definition::{DefaultFrameInfo, FileHeader, FileType, ImageFrameInfo, ModelFrameInfo};
-use super::file::{File, FileImpl};
+use super::file::{BufferFileImpl, File, FileImpl};
 use crate::raw_file::SqPackRawFile;
 use crate::util::cast;
 
@@ -24,6 +24,12 @@ impl SqPackData {
         let file = Box::new(FileImpl::open(file_path).await?);
 
         Ok(Self { file })
+    }
+
+    pub fn from_raw(raw: Vec<u8>) -> Self {
+        let file = Box::new(BufferFileImpl::new(raw));
+
+        Self { file }
     }
 
     pub async fn read(&self, offset: u64) -> io::Result<SqPackRawFile> {

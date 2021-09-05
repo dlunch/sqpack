@@ -49,3 +49,20 @@ impl File for FileImpl {
         .await
     }
 }
+
+pub struct BufferFileImpl {
+    buf: Vec<u8>,
+}
+
+impl BufferFileImpl {
+    pub fn new(buf: Vec<u8>) -> Self {
+        Self { buf }
+    }
+}
+
+#[async_trait]
+impl File for BufferFileImpl {
+    async fn read_at(&self, offset: u64, length: usize) -> io::Result<Vec<u8>> {
+        Ok(self.buf[offset as usize..offset as usize + length].to_vec())
+    }
+}
