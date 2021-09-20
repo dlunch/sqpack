@@ -1,4 +1,4 @@
-use alloc::fmt;
+use alloc::{fmt, format, string::String};
 use core::result;
 
 #[derive(Debug)]
