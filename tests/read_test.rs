@@ -4,7 +4,7 @@ use std::path::Path;
 
 use sqpack::{Package, Result, SqPackPackage};
 
-#[async_std::test]
+#[tokio::test]
 async fn read_test() -> Result<()> {
     let _ = pretty_env_logger::formatted_timed_builder()
         .filter(Some("sqpack"), log::LevelFilter::Trace)
@@ -21,7 +21,7 @@ async fn read_test() -> Result<()> {
         assert_eq!(data[1], b'X');
         assert_eq!(data[2], b'H');
         assert_eq!(data[3], b'F');
-        assert_eq!(data.len(), 226);
+        assert_eq!(data.len(), 230);
     }
 
     {

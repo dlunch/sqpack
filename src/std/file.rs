@@ -1,9 +1,9 @@
 use std::io;
 use std::path::PathBuf;
 
-use async_std::task;
 use async_trait::async_trait;
 use cfg_if::cfg_if;
+use tokio::task;
 
 #[async_trait]
 pub trait File: Sync + Send {
@@ -16,7 +16,7 @@ pub struct FileImpl {
 
 impl FileImpl {
     pub async fn open(path: PathBuf) -> io::Result<Self> {
-        let file = task::spawn_blocking(move || std::fs::File::open(path)).await?;
+        let file = task::spawn_blocking(move || std::fs::File::open(path)).await??;
 
         Ok(Self { file })
     }
@@ -46,7 +46,7 @@ impl File for FileImpl {
 
             Ok(buf)
         })
-        .await
+        .await?
     }
 }
 

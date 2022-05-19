@@ -2,7 +2,7 @@ use core::mem::size_of;
 use std::io;
 use std::path::Path;
 
-use async_std::fs;
+use tokio::fs;
 
 use super::definition::{FileSegment, FolderSegment, SqPackHeader, SqPackIndexHeader};
 use crate::error::{Result, SqPackReaderError};
