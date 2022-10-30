@@ -11,7 +11,7 @@ pub trait Package: Sync + Send {
     async fn read_file(&self, path: &str) -> Result<Vec<u8>> {
         debug!("Reading {}", path);
 
-        let reference = SqPackFileReference::new(path);
+        let reference = SqPackFileReference::new(path)?;
         let result = self.read_file_by_reference(&reference).await;
 
         if result.is_err() {

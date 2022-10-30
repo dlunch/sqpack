@@ -3,6 +3,7 @@ use core::result;
 
 #[derive(Debug)]
 pub enum SqPackReaderError {
+    InvalidPath,
     NoSuchFolder,
     NoSuchFile,
     ReadError(String),
@@ -11,6 +12,7 @@ pub enum SqPackReaderError {
 impl fmt::Display for SqPackReaderError {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         match self {
+            SqPackReaderError::InvalidPath => f.write_str("Invalid path"),
             SqPackReaderError::NoSuchFolder => f.write_str("No such folder"),
             SqPackReaderError::NoSuchFile => f.write_str("No such file"),
             SqPackReaderError::ReadError(x) => f.write_str(&format!("Read error, {}", x)),

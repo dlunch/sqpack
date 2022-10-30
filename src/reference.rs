@@ -1,7 +1,7 @@
 #[cfg(debug_assertions)]
 use alloc::string::String;
 
-use super::archive_id::SqPackArchiveId;
+use super::{archive_id::SqPackArchiveId, error::Result};
 
 #[derive(Copy, Clone, Hash, Eq, PartialEq)]
 pub struct SqPackFileHash {
@@ -48,14 +48,14 @@ pub struct SqPackFileReference {
 }
 
 impl SqPackFileReference {
-    pub fn new(path: &str) -> Self {
+    pub fn new(path: &str) -> Result<Self> {
         let path_str = path.to_ascii_lowercase();
 
-        Self {
-            archive_id: SqPackArchiveId::from_file_path(&path_str),
+        Ok(Self {
+            archive_id: SqPackArchiveId::from_file_path(&path_str)?,
             hash: SqPackFileHash::new(&path_str),
             #[cfg(debug_assertions)]
             path: path_str,
-        }
+        })
     }
 }
