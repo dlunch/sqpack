@@ -29,7 +29,7 @@ pub struct SqPackPackage {
 }
 
 impl SqPackPackage {
-    pub fn new(base_dir: &Path) -> io::Result<Self> {
+    pub fn new(base_dir: &Path) -> Result<Self> {
         Ok(Self {
             archives: SqPackArchiveContainer::new(base_dir)?,
         })
