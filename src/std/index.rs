@@ -59,7 +59,7 @@ impl SqPackIndex {
         // XXX
         #[allow(mutable_transmutes)]
         #[allow(clippy::transmute_ptr_to_ptr)]
-        let mut segment: &mut FileSegment = unsafe { core::mem::transmute(segment) };
+        let segment: &mut FileSegment = unsafe { core::mem::transmute(segment) };
         segment.data_offset = new_offset;
 
         Ok(())
