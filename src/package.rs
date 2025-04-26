@@ -15,7 +15,7 @@ pub trait Package: Sync + Send {
         let result = self.read_file_by_reference(&reference).await;
 
         if result.is_err() {
-            debug!("No such file {}", path);
+            debug!("No such file {path}");
         }
         result
     }

@@ -17,7 +17,7 @@ pub struct SqPackData {
 
 impl SqPackData {
     pub async fn new(base_path: &str, index: u32) -> io::Result<Self> {
-        let file_path = PathBuf::from(format!("{}.dat{}", base_path, index));
+        let file_path = PathBuf::from(format!("{base_path}.dat{index}"));
 
         debug!("Opening {:?}", &file_path);
 
@@ -33,7 +33,7 @@ impl SqPackData {
     }
 
     pub async fn read(&self, offset: u64) -> io::Result<SqPackRawFile> {
-        trace!("Read from offset {}", offset);
+        trace!("Read from offset {offset}");
 
         let file_header_data = self.file.read_at(offset, size_of::<FileHeader>()).await?;
         let file_header = cast::<FileHeader>(&file_header_data);
@@ -46,7 +46,7 @@ impl SqPackData {
     }
 
     async fn read_default(&self, base_offset: u64, file_header: &FileHeader) -> io::Result<SqPackRawFile> {
-        trace!("Read default from offset {}", base_offset);
+        trace!("Read default from offset {base_offset}");
 
         let frame_infos_data = self
             .file
@@ -87,7 +87,7 @@ impl SqPackData {
     }
 
     async fn read_model(&self, base_offset: u64, file_header: &FileHeader) -> io::Result<SqPackRawFile> {
-        trace!("Read model from offset {}", base_offset);
+        trace!("Read model from offset {base_offset}");
 
         let frame_info_data = self
             .file
@@ -112,7 +112,7 @@ impl SqPackData {
     }
 
     async fn read_image(&self, base_offset: u64, file_header: &FileHeader) -> io::Result<SqPackRawFile> {
-        trace!("Read image from offset {}", base_offset);
+        trace!("Read image from offset {base_offset}");
 
         let frame_infos_data = self
             .file

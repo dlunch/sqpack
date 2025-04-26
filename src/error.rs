@@ -15,7 +15,7 @@ impl fmt::Display for SqPackReaderError {
             SqPackReaderError::InvalidPath => f.write_str("Invalid path"),
             SqPackReaderError::NoSuchFolder => f.write_str("No such folder"),
             SqPackReaderError::NoSuchFile => f.write_str("No such file"),
-            SqPackReaderError::ReadError(x) => f.write_str(&format!("Read error, {}", x)),
+            SqPackReaderError::ReadError(x) => f.write_str(&format!("Read error, {x}")),
         }
     }
 }
