@@ -21,7 +21,7 @@ async fn read_test() -> Result<()> {
         assert_eq!(data[1], b'X');
         assert_eq!(data[2], b'H');
         assert_eq!(data[3], b'F');
-        assert_eq!(data.len(), 230);
+        assert_eq!(data.len(), 238);
     }
 
     {

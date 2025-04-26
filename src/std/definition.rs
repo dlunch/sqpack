@@ -45,6 +45,8 @@ pub struct FolderSegment {
 
 #[repr(u32)]
 pub enum FileType {
+    Unknown = 0,
+    Empty = 1,
     Default = 2,
     Model = 3,
     Image = 4,
@@ -53,6 +55,8 @@ pub enum FileType {
 impl FileType {
     pub fn from_raw(raw: u32) -> Self {
         match raw {
+            0 => FileType::Unknown,
+            1 => FileType::Empty,
             2 => FileType::Default,
             3 => FileType::Model,
             4 => FileType::Image,

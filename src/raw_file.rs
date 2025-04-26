@@ -28,6 +28,14 @@ impl SqPackRawFile {
         }
     }
 
+    pub fn empty() -> Self {
+        Self {
+            uncompressed_size: 0,
+            header: Bytes::new(),
+            blocks: Vec::new(),
+        }
+    }
+
     pub fn into_decoded(self) -> Vec<u8> {
         let mut result = Vec::with_capacity(self.uncompressed_size as usize + self.header.len());
         result.extend(self.header);
