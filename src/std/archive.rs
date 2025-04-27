@@ -41,9 +41,9 @@ impl SqPackArchive {
         let file_offset = self.index.find_offset(folder_hash, file_hash)?;
 
         let dat_index = (file_offset & 0x0f) >> 1;
-        let offset = (file_offset & 0xffff_fff0) << 3;
+        let offset = ((file_offset as u64) & 0xffff_fff0) << 3;
 
-        Ok(self.data[dat_index as usize].read(offset as u64).await?)
+        Ok(self.data[dat_index as usize].read(offset).await?)
     }
 
     pub async fn read_file(&self, folder_hash: u32, file_hash: u32) -> Result<Vec<u8>> {
